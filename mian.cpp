@@ -1,72 +1,78 @@
 #include <stdio.h>
-#include <windows.h>
-#include <conio.h>
-char printMap[9][12]={"*#*********",
-					  "***###*###*",
-					  "###**#****#",
-					  "*#**###**#*",
-					  "***********",
-					  "#####*##*##",
-					  "*##*****#*E",
-					  "***#*###**#",
-					  "*#*********"};
-
-
-void pos(int a,int b)
+#include <string.h>
+#include <stdlib.h>
+int isOperator(char c)
 {
-	COORD pos;
-	pos.X=b;
-	pos.Y=a;	
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),pos);
-}
+	if(c=='+'||c=='-'||c=='*'||c=='/')
+		return 1;
+	else return 0;
 
-void cycle()
-{	
-	int x=0,y=0;
-	char MOVE;
-	while((x==6&&y==10)==0)
+}
+void moveOperator(char *p)
+{
+	while(*p!='\0')
 	{
-		pos(x,y);
-		MOVE=getch();
-		if(MOVE=='s')
-		{
-			if(printMap[x+1][y]=='*')
-			{
-				x++;
-			}
-		}
-		if(MOVE=='w')
-		{
-			if(printMap[x-1][y]=='*')
-			{
-				x--;
-			}
-		}
-		if(MOVE=='a')
-		{
-			if(printMap[x][y-1]=='*')
-			{
-				y--;
-			}
-		}
-		if(MOVE=='d')
-		{
-			if(printMap[x][y+1]=='*'||printMap[x][y+1]=='E')
-			{
-				y++;
-			}
-		}
+		*p=*(p+1);
+		p++;
 	}
-	putchar('\n');putchar('\n');putchar('\n');
 }
 
+void moveOperand(float *p,float *end){
+	while(p!=end)
+	{
+		*p=*(p+1);
+		p++;
+	}
 
+}
 int main()
 {
-	for(int Q=0;Q<9;Q++)
-	{
-		printf("%s\n",printMap[Q]);
+	char strExp[]="1-2.5*4+10.2/5.1";
+	char operators[100]={'\0'};
+	float operands[100];
+}
+
+int operatorsIndex=0;
+for(int i=0;i<strlen(strExp);i++)
+{
+	if(isOperator(strExp[i])){
+		operators[operatorsIndex]=strExp[i];
+		operatorsIndex++;
 	}
-	cycle();
-	printf("ÄãÅÜ³öÀ´À²£¡£¡£¡\n");
+}
+
+puts(operator);
+int operatorsIndex=0
+for(int i=0;i<strlen(strExp);i++){
+	char temp[100]={'\0'};
+	int tempIndex=0;
+	while(!isOperator(strExp[i])){
+		temp[tempIndex]=strExp[i];
+		i++;
+		tempIndex++;
+	}
+	float floatV=atof(temp);
+	operands[operandsIndex++]=floatV;
+
+}
+for(int i=0;i<operandsIndex;i++)
+printf("%0.lf\n",operands[i]);
+char *poperator=operators;
+float *poperand=operands;
+while(*poperator!='\0'){
+	if(*poperator=='*'){
+		float lefOperand=*poperand;
+		float rightOperand=*(poperand+1);
+		float res=leftOperand*rightOperand;
+		*poperand=res;
+		moveOperatoe(poperator);
+		moveOperand(poperand+1,&operands[operandsIndex--]);
+	}
+	else{
+		poperator++;
+		poperand++;
+	}
+}
+puts(operators);
+return 0;
 }
